@@ -1,5 +1,4 @@
 <?php
-	include 'lab.php';
 	use PHPUnit\Framework\TestCase;
 
 	class buildTest extends TestCase
