@@ -1,5 +1,5 @@
 <?php
-	include 'requesthandler.php';
+
 	use PHPUnit\Framework\TestCase;
 
 	class buildTest extends TestCase
