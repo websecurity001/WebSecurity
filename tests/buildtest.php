@@ -12,7 +12,7 @@
 		}
 
 		public function testInvalidNameForCreate() {
-			$name = "nc -nlvp 8000";
+			$name = "xc -nlvp 8000";
 			$requestHandler = new RequestHandler();
 			$this->assertSame($requestHandler-> isValidNameForCreate($name),false);
 		}
