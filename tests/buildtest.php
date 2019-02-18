@@ -8,6 +8,7 @@
 		 * @small
 		 */
 		public function testValidNameForCreate() {
+			sleep(2);
 			$name = "text.txt";
 			$requestHandler = new RequestHandler();
 			$this->assertSame($requestHandler-> isValidNameForCreate($name),true);
