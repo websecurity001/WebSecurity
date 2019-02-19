@@ -1,4 +1,5 @@
-# WebSecurity
+# WebSecurity Project
 
-#Committing updated code and test case.
+# Project developed to support Assignment 4
+# Deploy a continuous integration pipeline using Github, Jenkins
 
