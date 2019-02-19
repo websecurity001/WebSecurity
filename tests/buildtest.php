@@ -13,10 +13,10 @@
 			$this->expectOutputString('File Created');
 
 			//Bad request. Use it after commenting the escapeshellcmd line in create method. 
-			//$requestHandler->processRequest("create","data.txt; nc -nlvp 8000","Hello World");
+			$requestHandler->processRequest("create","data.txt; nc -nlvp 8000","Hello World");
 
 			//Good request
-			$requestHandler->processRequest("create","data.txt","Hello World");
+			//$requestHandler->processRequest("create","data.txt","Hello World");
 		}
 
 		/**
@@ -26,10 +26,10 @@
 			$requestHandler = new RequestHandler();
 
 			//Bad Request
-			$requestHandler->processRequest("view","../../../../../../../etc/passwd","");
+			//$requestHandler->processRequest("view","../../../../../../../etc/passwd","");
 
 			//Good request
-			//$requestHandler->processRequest("view","data.txt","");
+			$requestHandler->processRequest("view","data.txt","");
 
 			//Validate that the content of output does not contains content
 			//from /etc/passwd file.
