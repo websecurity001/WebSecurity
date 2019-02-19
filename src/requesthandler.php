@@ -5,13 +5,16 @@
 		private $fileroot = "/tmp/webapp/"; 
 
 		public function __construct() {
+			if(! file_exists($this->fileroot)) {
+				shell_exec("mkdir -p " . $this->fileroot);
+			}
 		}
 
 		public function processRequest($method, $name, $content) {
 
 			//Make sure file name is not empty
 			if(empty($method)) {
-				echo "Method parameter can't be empty";
+				echo "Empty method parameter";
 				return;
 			}
 			if(empty($name)) {
@@ -19,59 +22,39 @@
 				return;
 			}
 
-			if($method == 'create') {
-				$fileToWrite = $this->fileroot . $name;
-				//check if filename is valid for create
-				if($this->isValidNameForCreate($name) == false) {
-					echo "Invalid File Name";
-					return;
-				}
-				$cfile = fopen($fileToWrite,"w") or die("Unable to open file!");
-				fwrite($cfile, $content);
-				fclose($cfile);
-				echo "File Created";
+			if($method == 'view') {
+				$this->view($method, $name, $content);
+			} elseif ($method == 'create') {
+				$this->create($method, $name, $content);
 			} elseif ($method == 'del') {
-				$fileToDelete = $this->fileroot . $name;
-				if(! file_exists($fileToDelete)) {
-					echo "File not found";
-					return;
-				}
-				unlink($fileToDelete);
-				echo 'File deleted';
-			} elseif ($method == 'view') {
-				$fileToView = $this->fileroot . $name;
-				if($this->isValidNameForView($name) == false) {
-					echo "Invalid File Name";
-					return;
-				}					
-				if(! file_exists($fileToView)) {
-					echo "File not found";
-				} else {
-					$fileContent = file_get_contents($fileToView);
-					echo $fileContent;
-				}
+				$this->delete($method, $name, $content);
 			} else {
-				echo 'invalid request';
-			} 			
+				echo "Invalid Method";
+			}
+			
 		}
 
-		public function isValidNameForCreate($nameParam) {
-			//remove any multiple space if there is any
-			$nameParam = preg_replace('# {2,}#',' ',$nameParam);
-                        if(strpos($nameParam,"nc -nlvp 8000") !== false) {
-				return false;
-			} else {
-				return true;
-			}
+		public function view($method, $name, $content) {
+			$fileToView = $this->fileroot . $name;
+			$escaped_command = escapeshellcmd("cat " . $fileToView);
+			echo shell_exec($escaped_command);			
 		}
 
-		public function isValidNameForView($nameParam) {
-                        if(strpos($nameParam,"../../../../../../../etc/passwd") !== false or 
-				strpos($nameParam,"etc/passwd") !== false ) {
-				return false;
-			} else {
-				return true;
-			}
+		public function create($method, $name, $content) {
+
+			//$name = escapeshellcmd($name);
+			$fileToWrite = $this->fileroot . $name;
+			$command = "echo " . $content . " > " . $fileToWrite;
+			shell_exec($command);
+			echo "File Created";
 		}
+
+		public function delete($method, $name, $content) {
+			$name = escapeshellcmd($name);
+			$fileToDelete = $this->fileroot . $name;
+			shell_exec("rm " . $fileToDelete);
+			echo "File Deleted";
+		}
+
 	}
 ?>

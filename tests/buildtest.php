@@ -4,41 +4,56 @@
 
 	class buildTest extends TestCase
 	{
+
 		/**
 		 * @small
 		 */
-		public function testValidNameForCreate() {
-			sleep(2);
-			$name = "text.txt";
+		public function testCreate() {
 			$requestHandler = new RequestHandler();
-			$this->assertSame($requestHandler-> isValidNameForCreate($name),true);
+			$this->expectOutputString('File Created');
+
+			//Bad request. Use it after commenting the escapeshellcmd line in create method. 
+			//$requestHandler->processRequest("create","data.txt; nc -nlvp 8000","Hello World");
+
+			//Good request
+			$requestHandler->processRequest("create","data.txt","Hello World");
 		}
 
 		/**
 		 * @small
 		 */
-		public function testInvalidNameForCreate() {
-			$name = "nc -nlvp 8000";
+		public function testView() {
+			//sleep(2);
 			$requestHandler = new RequestHandler();
-			$this->assertSame($requestHandler-> isValidNameForCreate($name),false);
+
+			//Bad Request
+			//$requestHandler->processRequest("view","../../../../../../../etc/passwd","");
+
+			//Good request
+			$requestHandler->processRequest("view","data.txt","");
+
+			//Validate that the content of output does not contains content
+			//from /etc/passwd file.
+			$output = ob_get_contents();
+			$this->assertThat($output, $this->logicalNot($this->stringContains('root:x:0:0:root:')));
 		}
 
 		/**
 		 * @small
 		 */
-		public function testValidNameForView() {
-			$name = "text.txt";
+		public function testDelete() {
 			$requestHandler = new RequestHandler();
-			$this->assertSame($requestHandler-> isValidNameForView($name),true);
+			$this->expectOutputString('File Deleted');
+			$requestHandler->processRequest("del","data.txt","");
 		}
 
 		/**
 		 * @small
 		 */
-		public function testInvalidNameForView() {
-			$name = "../../../../../../../etc/passwd";
+		public function testInvalidMethod() {
 			$requestHandler = new RequestHandler();
-			$this->assertSame($requestHandler-> isValidNameForView($name),false);
+			$this->expectOutputString('Invalid Method');
+			$requestHandler->processRequest("something","data.txt","Hello World");
 		}
 
 	}
