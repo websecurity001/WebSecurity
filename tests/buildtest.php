@@ -23,7 +23,7 @@
 		 * @small
 		 */
 		public function testView() {
-			//sleep(2);
+			sleep(2);
 			$requestHandler = new RequestHandler();
 
 			//Bad Request
