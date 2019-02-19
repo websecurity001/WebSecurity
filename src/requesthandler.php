@@ -42,7 +42,7 @@
 
 		public function create($method, $name, $content) {
 
-			//$name = escapeshellcmd($name);
+			$name = escapeshellcmd($name);
 			$fileToWrite = $this->fileroot . $name;
 			$command = "echo " . $content . " > " . $fileToWrite;
 			shell_exec($command);

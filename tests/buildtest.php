@@ -12,11 +12,11 @@
 			$requestHandler = new RequestHandler();
 			$this->expectOutputString('File Created');
 
-			//Bad request. Use it after commenting the escapeshellcmd line in create method. 
-			$requestHandler->processRequest("create","data.txt; nc -nlvp 8000","Hello World");
+			//Bad request. Use it after commenting escapeshellcmd line in create method. 
+			//$requestHandler->processRequest("create","data.txt; nc -nlvp 8000","Hello World");
 
 			//Good request
-			//$requestHandler->processRequest("create","data.txt","Hello World");
+			$requestHandler->processRequest("create","data.txt","Hello World");
 		}
 
 		/**
