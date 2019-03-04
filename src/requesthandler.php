@@ -36,7 +36,8 @@
 
 		public function view($method, $name, $content) {
 			$fileToView = $this->fileroot . $name;
-			$escaped_command = escapeshellcmd("cat " . $fileToView);
+			//Removed escape
+			$escaped_command = "cat " . $fileToView;
 			echo shell_exec($escaped_command);			
 		}
 
