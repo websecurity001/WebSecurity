@@ -26,10 +26,10 @@
 			$requestHandler = new RequestHandler();
 
 			//Bad Request
-			//$requestHandler->processRequest("view","../../../../../../../etc/passwd","");
+			$requestHandler->processRequest("view","../../../../../../../etc/passwd","");
 
 			//Good request
-			$requestHandler->processRequest("view","data.txt","");
+			//$requestHandler->processRequest("view","data.txt","");
 
 			//Validate that the content of output does not contains content
 			//from /etc/passwd file.
